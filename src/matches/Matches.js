@@ -41,16 +41,16 @@ export default function Matches({ data, setData }) {
                 </tbody>
             </table>
             <button onClick={handleClick}>Add</button>
-            {showForm && <Form />}
+            {showForm && <Form setShowForm = {setShowForm}  />}
         </div>
     )
 }
 
-const Form = () => {
+const Form = ({ setShowForm }) => {
 
-    // const handleCancelAction = () = > {
-
-    // }
+    const handleCancelClick = () => {
+        setShowForm(false);
+    }
 
 
     const handleSubmitForm = (e) => {
@@ -63,8 +63,6 @@ const Form = () => {
         const formData = {
 
         }
-
-
     }
 
     return (
@@ -75,7 +73,7 @@ const Form = () => {
                 <input type="score" name="player2" />
                 <input type="submit" value="Submit" />
             </form>
-            <button>Cancel</button>
+            <button onClick={handleCancelClick}>Cancel</button>
         </>
     );
 };
