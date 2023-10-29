@@ -1,4 +1,6 @@
 .Stats{
-    background-color: lightpink;
-
+    tr:nth-child(even) { 
+        background-color: lightgrey; 
+    } 
 }
+

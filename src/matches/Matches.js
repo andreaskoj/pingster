@@ -4,8 +4,10 @@ import './Matches.css'
 export default function Matches({ data, setData }) {
 
     const [showForm, setShowForm] = React.useState(false);
+    const [showAddButton, setShowAddButton] = React.useState(true);
 
     const handleClick = () => {
+        setShowAddButton(false)
         // let match = {
         //     "Id": 3,
         //     "Player1": "Test1",
@@ -40,37 +42,46 @@ export default function Matches({ data, setData }) {
                     ))}
                 </tbody>
             </table>
-            <button onClick={handleClick}>Add</button>
-            {showForm && <Form setShowForm = {setShowForm}  />}
+            {showAddButton && <button onClick={handleClick}>Add</button>}  
+            {showForm && <Form setShowForm = {setShowForm} setShowAddButton={ setShowAddButton} setData = {setData} data = {data} />}
         </div>
     )
 }
 
-const Form = ({ setShowForm }) => {
+const Form = ({ setShowForm, setShowAddButton, setData , data}) => {
 
     const handleCancelClick = () => {
         setShowForm(false);
+        setShowAddButton(true)
     }
 
-
     const handleSubmitForm = (e) => {
-
         e.preventDefault();
 
-        const data = new FormData(e.target);
-        console.log([...data.entries()]);
+        const form = new FormData(e.target);
+        const formArray = [...form.entries()]
+    
+        const match = {};
 
-        const formData = {
+        formArray.forEach((innerArray) => {
+          const key = innerArray[0];
+          const value = innerArray[1];
+          match[key] = value;
+        });
 
-        }
+        setData([...data, match])
+
+        setShowForm(false)
+        setShowAddButton(true)
+
     }
 
     return (
         <>
             <form onSubmit={handleSubmitForm}>
-                <input type="text" name="player1" />
-                <input type="text" name="player2" />
-                <input type="score" name="player2" />
+                <input type="text" name="Player1" />
+                <input type="text" name="Player2" />
+                <input type="score" name="Score" />
                 <input type="submit" value="Submit" />
             </form>
             <button onClick={handleCancelClick}>Cancel</button>

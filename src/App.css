@@ -1,6 +1,12 @@
 .App {
-  background-color: lightgray;
+  
   font-size: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+tr:nth-child(odd) { 
+  background-color: lightgrey; 
+} 
+
+tr:nth-child(odd) {background: green}
