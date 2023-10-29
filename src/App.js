@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Stats from './stats/Stats';
+import Matches from './matches/Matches';
+
+let data =
+    [
+      {
+        "Id": 1,
+        "Player1": "Andreas",
+        "Player2": "Magda",  
+        "Score": "2:3",
+      },
+      {
+        "Id": 2,
+        "Player1": "Andreas",
+        "Player2": "Magda",  
+        "Score": "3:2",
+      }
+    ]
 
 function App() {
+  const [state, setState] = React.useState(data);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Stats data={state} />
+      <Matches data = {state} setData = {setState} />
     </div>
   );
 }

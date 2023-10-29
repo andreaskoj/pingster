@@ -1,0 +1,15 @@
+.Matches{
+    background-color: lightcyan;
+    height: 100%;
+}
+
+button {
+    font-weight: bold;
+    border: none;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    cursor:pointer;
+  }
