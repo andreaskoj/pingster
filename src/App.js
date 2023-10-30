@@ -16,6 +16,18 @@ let data =
         "Player1": "Andreas",
         "Player2": "Magda",  
         "Score": "3:2",
+      },
+      {
+        "Id": 3,
+        "Player1": "Mike",
+        "Player2": "Bob",  
+        "Score": "0:3",
+      },
+      {
+        "Id": 4,
+        "Player1": "Victoria",
+        "Player2": "Zoe",  
+        "Score": "0:3",
       }
     ]
 

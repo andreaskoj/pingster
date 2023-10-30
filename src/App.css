@@ -1,12 +1,45 @@
 .App {
-  
   font-size: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-tr:nth-child(odd) { 
-  background-color: lightgrey; 
+h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+thead{
+  padding: 5px;
+  color: white;
+  background-color: black;
+}
+
+tbody tr:nth-child(odd) { 
+  background-color: #e6e6e6; 
 } 
 
-tr:nth-child(odd) {background: green}
+td, th {
+  padding:5px 60px 5px 5px;
+}
+
+button {
+  background-color:  #e6e6e6;
+  font-weight: bold;
+  border: none;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+button:hover {
+  background-color:  #cccccc;
+  cursor:pointer;
+}
+

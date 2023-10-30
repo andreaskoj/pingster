@@ -3,10 +3,9 @@ import './Stats.css'
 export default function Stats({ data }) {
     return (
         <div className="Stats">
-            Stats
+            <h2>Stats</h2>
             <table>
-
-            <thead>
+                <thead>
                     <tr>
                         {/* <th>Date</th> */}
                         <th>Rank</th>
@@ -15,12 +14,7 @@ export default function Stats({ data }) {
                         <th>Loses</th>
                     </tr>
                 </thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Wins</th>
-                    <th>Loses</th>
-                </tr>
+                <tbody>
                 {data.map((item, index) => (
                     <tr key={item.Id}>
                         <td>{index + 1}</td>
@@ -29,6 +23,7 @@ export default function Stats({ data }) {
                         <td>{item.Score}</td>
                     </tr>
                 ))}
+                 </tbody>
             </table>
         </div>
     )

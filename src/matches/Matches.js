@@ -21,7 +21,7 @@ export default function Matches({ data, setData }) {
 
     return (
         <div className="Matches">
-            Matches
+            <h2>Matches</h2>
             <table>
                 <thead>
                     <tr>
@@ -34,7 +34,6 @@ export default function Matches({ data, setData }) {
                 <tbody>
                     {data.map((item) => (
                         <tr key={item.Id}>
-                            <td>{item.Player1}</td>
                             <td>{item.Player1}</td>
                             <td>{item.Player2}</td>
                             <td>{item.Score}</td>
