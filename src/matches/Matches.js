@@ -22,32 +22,33 @@ export default function Matches({ data, setData }) {
     return (
         <div className="Matches">
             <h2>Matches</h2>
-            <table>
-                <thead>
-                    <tr>
-                        {/* <th>Date</th> */}
-                        <th>Player 1</th>
-                        <th>Player 2</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item) => (
-                        <tr key={item.Id}>
-                            <td>{item.Player1}</td>
-                            <td>{item.Player2}</td>
-                            <td>{item.Score}</td>
+            <div className='TableWrapper'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Player 1</th>
+                            <th>Player 2</th>
+                            <th>Result</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            {showAddButton && <button onClick={handleClick}>Add</button>}  
-            {showForm && <Form setShowForm = {setShowForm} setShowAddButton={ setShowAddButton} setData = {setData} data = {data} />}
+                    </thead>
+                    <tbody>
+                        {data.map((item) => (
+                            <tr key={item.Id}>
+                                <td>{item.Player1}</td>
+                                <td>{item.Player2}</td>
+                                <td>{item.Score}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {showAddButton && <button onClick={handleClick}>Add</button>}
+                {showForm && <Form setShowForm={setShowForm} setShowAddButton={setShowAddButton} setData={setData} data={data} />}
+            </div>
         </div>
     )
 }
 
-const Form = ({ setShowForm, setShowAddButton, setData , data}) => {
+const Form = ({ setShowForm, setShowAddButton, setData, data }) => {
 
     const handleCancelClick = () => {
         setShowForm(false);
@@ -59,20 +60,19 @@ const Form = ({ setShowForm, setShowAddButton, setData , data}) => {
 
         const form = new FormData(e.target);
         const formArray = [...form.entries()]
-    
+
         const match = {};
 
         formArray.forEach((innerArray) => {
-          const key = innerArray[0];
-          const value = innerArray[1];
-          match[key] = value;
+            const key = innerArray[0];
+            const value = innerArray[1];
+            match[key] = value;
         });
 
         setData([...data, match])
 
         setShowForm(false)
         setShowAddButton(true)
-
     }
 
     return (
@@ -80,7 +80,7 @@ const Form = ({ setShowForm, setShowAddButton, setData , data}) => {
             <form onSubmit={handleSubmitForm}>
                 <input type="text" name="Player1" />
                 <input type="text" name="Player2" />
-                <input type="score" name="Score" />
+                <input type="text" name="Score" />
                 <input type="submit" value="Submit" />
             </form>
             <button onClick={handleCancelClick}>Cancel</button>

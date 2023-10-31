@@ -13,22 +13,27 @@ table {
   border-collapse: collapse;
 }
 
-thead{
+thead {
   padding: 5px;
   color: white;
   background-color: black;
 }
 
-tbody tr:nth-child(odd) { 
-  background-color: #e6e6e6; 
-} 
+tr {
+  text-align: center;
+}
 
-td, th {
-  padding:5px 60px 5px 5px;
+tbody tr:nth-child(odd) {
+  background-color: #e6e6e6;
+}
+
+td,
+th {
+  padding: 5px 60px 5px 5px;
 }
 
 button {
-  background-color:  #e6e6e6;
+  background-color: #e6e6e6;
   font-weight: bold;
   border: none;
   font-family: 'VT323', monospace;
@@ -38,8 +43,44 @@ button {
   text-decoration: none;
 }
 
-button:hover {
-  background-color:  #cccccc;
-  cursor:pointer;
+button:hover, input[type=submit]:hover {
+  background-color: #cccccc;
+  cursor: pointer;
 }
 
+input[type=submit] {
+  background-color: #e6e6e6;
+  font-weight: bold;
+  border: none;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+input[type=text] {
+  margin: 0px, 5px;
+  border: none;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  background-color: #e6e6e6;
+  caret-color: black;
+  margin-right: 10px;
+  min-height: 35px;
+}
+
+input[type=text]:focus {
+  outline: none;
+}
+
+.TableWrapper table{  
+  width: 600px
+
+}
+
+.TableWrapper button{  
+  margin-top: 5px;
+
+}
