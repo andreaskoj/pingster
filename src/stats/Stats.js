@@ -1,26 +1,65 @@
 import './Stats.css'
 
+function groupAndOrderByWinsAndLosses(data) {
+    const playerStats = {};
+
+    data.forEach((game) => {
+      const player1Name = game.Player1.Name;
+      const player2Name = game.Player2.Name;
+  
+      if (!playerStats[player1Name]) {
+        playerStats[player1Name] = { Wins: 0, Losses: 0 };
+      }
+  
+      if (!playerStats[player2Name]) {
+        playerStats[player2Name] = { Wins: 0, Losses: 0 };
+      }
+  
+      if (game.Player1.Score > game.Player2.Score) {
+        playerStats[player1Name].Wins++;
+        playerStats[player2Name].Losses++;
+      }
+      
+      if (game.Player2.Score > game.Player1.Score) {
+        playerStats[player2Name].Wins++;
+        playerStats[player1Name].Losses++;
+      }
+    });
+  
+    const playerStatsArray = Object.keys(playerStats).map((name) => ({
+      Name: name,
+      Wins: playerStats[name].Wins,
+      Losses: playerStats[name].Losses,
+    }));
+  
+    playerStatsArray.sort((a, b) => b.Wins - a.Wins);
+  
+    return playerStatsArray;
+  }
+
 export default function Stats({ data }) {
+
+   data = groupAndOrderByWinsAndLosses(data)
+
     return (
         <div className="Stats">
             <h2>Stats</h2>
             <table>
                 <thead>
                     <tr>
-                        {/* <th>Date</th> */}
                         <th>Rank</th>
                         <th>Player</th>
-                        <th>Win</th>
+                        <th>Wins</th>
                         <th>Loses</th>
                     </tr>
                 </thead>
                 <tbody>
                 {data.map((item, index) => (
-                    <tr key={item.Id}>
+                    <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item.Player1}</td>
-                        <td>{item.Player2}</td>
-                        <td>{item.Score}</td>
+                        <td>{item.Name}</td>
+                        <td>{item.Wins}</td>
+                        <td>{item.Losses}</td>
                     </tr>
                 ))}
                  </tbody>

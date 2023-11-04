@@ -8,14 +8,6 @@ export default function Matches({ data, setData }) {
 
     const handleClick = () => {
         setShowAddButton(false)
-        // let match = {
-        //     "Id": 3,
-        //     "Player1": "Test1",
-        //     "Player2": "Test2",  
-        //     "Score": "3:2",
-        //   }
-
-        //   setData([...data, match])'
         setShowForm(true)
     }
 
@@ -26,6 +18,7 @@ export default function Matches({ data, setData }) {
                 <table>
                     <thead>
                         <tr>
+                            <th>Date</th>
                             <th>Player 1</th>
                             <th>Player 2</th>
                             <th>Result</th>
@@ -34,9 +27,10 @@ export default function Matches({ data, setData }) {
                     <tbody>
                         {data.map((item) => (
                             <tr key={item.Id}>
-                                <td>{item.Player1}</td>
-                                <td>{item.Player2}</td>
-                                <td>{item.Score}</td>
+                                <td>{item.Date}</td>
+                                <td>{item.Player1.Name}</td>
+                                <td>{item.Player2.Name}</td>
+                                <td>{item.Player1.Score}:{item.Player2.Score}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -61,13 +55,31 @@ const Form = ({ setShowForm, setShowAddButton, setData, data }) => {
         const form = new FormData(e.target);
         const formArray = [...form.entries()]
 
-        const match = {};
+        console.log(formArray)
+        
 
-        formArray.forEach((innerArray) => {
-            const key = innerArray[0];
-            const value = innerArray[1];
-            match[key] = value;
-        });
+
+        const match = {
+            "Player1": 
+              { 
+                "Name": formArray[0][1],
+                "Score": formArray[2][1].charAt(0), 
+              },
+                "Player2": 
+        	    { 
+                "Name": formArray[1][1],
+                "Score": formArray[2][1].charAt(2), 
+               },
+             "Date" :"2023-11-04"
+        };
+
+        console.log(match)
+
+        // formArray.forEach((innerArray) => {
+        //     const key = innerArray[0];
+        //     const value = innerArray[1];
+        //     match[key] = value;
+        // });
 
         setData([...data, match])
 
@@ -86,4 +98,15 @@ const Form = ({ setShowForm, setShowAddButton, setData, data }) => {
             <button onClick={handleCancelClick}>Cancel</button>
         </>
     );
+
+
+    function GetTodaysDate(){
+
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1
+        const day = String(currentDate.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
 };
