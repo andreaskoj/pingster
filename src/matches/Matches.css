@@ -1,4 +1,9 @@
-.Matches{
-    height: 100%;
+
+.textInputContainer{
+    display: inline-block;
+    max-width: 100%;
 }
 
+.TableWrapper {
+    width: 700px;
+}

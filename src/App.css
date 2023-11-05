@@ -1,7 +1,7 @@
 .App {
   font-size: 30px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 h2 {
@@ -33,6 +33,7 @@ th {
 }
 
 button {
+  margin: 10px 0 0 0;  
   background-color: #e6e6e6;
   font-weight: bold;
   border: none;
@@ -43,12 +44,13 @@ button {
   text-decoration: none;
 }
 
-button:hover, input[type=submit]:hover {
+button:hover, input[type=submit]:hover,[type=cancel]:hover {
   background-color: #cccccc;
   cursor: pointer;
 }
 
-input[type=submit] {
+input[type=submit],[type=cancel] {
+  margin: 5px 10px 5px 0px;
   background-color: #e6e6e6;
   font-weight: bold;
   border: none;
@@ -59,28 +61,18 @@ input[type=submit] {
   text-decoration: none;
 }
 
-
 input[type=text] {
-  margin: 0px, 5px;
+  color: white;
+  margin: 0px 10px 5px 0px;
+  padding: 0px 0px 0px 5px;
   border: none;
   font-family: 'VT323', monospace;
-  font-size: 22px;
-  background-color: #e6e6e6;
-  caret-color: black;
-  margin-right: 10px;
-  min-height: 35px;
+  font-size: 28px;
+  background-color: black;
+  caret-color: white;
+  width: 20%;
 }
 
 input[type=text]:focus {
   outline: none;
-}
-
-.TableWrapper table{  
-  width: 600px
-
-}
-
-.TableWrapper button{  
-  margin-top: 5px;
-
 }
