@@ -1,9 +1,10 @@
-
-.textInputContainer{
-    display: inline-block;
-    max-width: 100%;
+.scoreInput{
+    display: table-cell; 
+    width: auto;
+  
 }
 
-.TableWrapper {
-    width: 700px;
+
+.scoreInput input{
+    width:30px;
 }

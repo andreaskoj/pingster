@@ -64,8 +64,10 @@ export default function Matches({ data, setData }) {
                             <td><input type='Text' name="Player1" /></td>
                             <td><input type='Text' name="Player2" /></td>
                             <td>
-                                <input type='Text' name="ScorePlayer1" />:
-                                <input type='Text' name="ScorePlayer2" />
+                                <div className='scoreInput'>
+                                    <input type='Text' name="ScorePlayer1" />:
+                                    <input type='Text' name="ScorePlayer2" />
+                                </div>
                             </td>
                             <td><input type='Text' name="Date" value={getTodaysDate()} /></td>
                         </tr>}

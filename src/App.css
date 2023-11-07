@@ -29,7 +29,7 @@ tbody tr:nth-child(odd) {
 
 td,
 th {
-  padding: 5px 60px 5px 5px;
+  /* padding: 5px 60px 5px 5px; */
 }
 
 button {
@@ -62,17 +62,18 @@ input[type=submit],[type=cancel] {
 }
 
 input[type=text] {
-  color: white;
-  margin: 0px 10px 5px 0px;
-  padding: 0px 0px 0px 5px;
+  background-color: transparent;
+ caret-color: black;
+  /* margin: 0px 10px 5px 0px;
+  padding: 0px 0px 0px 5px; */
   border: none;
   font-family: 'VT323', monospace;
   font-size: 28px;
-  background-color: black;
-  caret-color: white;
-  width: 20%;
+  text-align: center;
+  width: auto;
 }
 
 input[type=text]:focus {
   outline: none;
 }
+
