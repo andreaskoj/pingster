@@ -1,8 +1,17 @@
 import React from 'react';
 import './Matches.css'
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 export default function Matches({ data, setData }) {
+    let form = {
+        Player1: "",
+        Player2: "",
+        ScorePlayer1: "",
+        ScorePlayer2: "",
+        Date: ""
+    }
 
+    //const [formData, setFormData] = React.useState();
     const [showForm, setShowForm] = React.useState(false);
     const [showAddButton, setShowAddButton] = React.useState(true);
     const [showCancelButton, setShowCancelButton] = React.useState(false);
@@ -27,6 +36,32 @@ export default function Matches({ data, setData }) {
         setShowCancelButton(false)
         setConfirmButton(false)
         setShowForm(false)
+
+        console.log(form)
+
+        if (form.Date == "") form.Date = getTodaysDate()
+
+        const match = {
+            "Id":1,
+            "Player1":
+            {
+                "Name": form.Player1,
+                "Score": form.ScorePlayer1,
+            },
+            "Player2":
+            {
+                "Name": form.Player2,
+                "Score": form.ScorePlayer2,
+            },
+            "Date": form.Date
+        };
+
+        setData([...data, match])
+    }
+
+    const handleFormChangeEvent = (event) => {
+        const { name, value } = event.target
+        form = { ...form, [name]: value }
     }
 
     const getTodaysDate = () => {
@@ -61,83 +96,22 @@ export default function Matches({ data, setData }) {
                             </tr>
                         ))}
                         {showForm && <tr key="100">
-                            <td><input type='Text' name="Player1" /></td>
-                            <td><input type='Text' name="Player2" /></td>
+                            <td><input type='Text' name="Player1" onChange={handleFormChangeEvent} /></td>
+                            <td><input type='Text' name="Player2" onChange={handleFormChangeEvent} /></td>
                             <td>
                                 <div className='scoreInput'>
-                                    <input type='Text' name="ScorePlayer1" />:
-                                    <input type='Text' name="ScorePlayer2" />
+                                    <input type='Text' name="ScorePlayer1" onChange={handleFormChangeEvent} />:
+                                    <input type='Text' name="ScorePlayer2" onChange={handleFormChangeEvent} />
                                 </div>
                             </td>
-                            <td><input type='Text' name="Date" value={getTodaysDate()} /></td>
+                            <td><input type='Text' name="Date" value={getTodaysDate()} onChange={handleFormChangeEvent} /></td>
                         </tr>}
                     </tbody>
                 </table>
                 {showAddButton && <button onClick={handleAddClick}>Add</button>}
                 {showConfirmButton && <button onClick={handleConfirmClick}>Confirm</button>}
                 {showCancelButton && <button onClick={handleCancelClick}>Cancel</button>}
-                {/* {showForm && <Form setShowForm={setShowForm} setShowAddButton={setShowAddButton} setData={setData} data={data} />} */}
             </div>
         </div>
     )
 }
-
-// const Form = ({ setShowForm, setShowAddButton, setData, data }) => {
-
-//     const handleCancelClick = () => {
-//         setShowForm(false);
-//         setShowAddButton(true)
-//     }
-
-//     const handleSubmitForm = (e) => {
-//         e.preventDefault();
-
-//         const form = new FormData(e.target);
-//         const formArray = [...form.entries()]
-
-//         const match = {
-//             "Player1":
-//             {
-//                 "Name": formArray[0][1],
-//                 "Score": formArray[2][1].charAt(0),
-//             },
-//             "Player2":
-//             {
-//                 "Name": formArray[1][1],
-//                 "Score": formArray[2][1].charAt(2),
-//             },
-//             "Date": formArray[3][1]
-//         };
-
-//         setData([...data, match])
-
-//         setShowForm(false)
-//         setShowAddButton(true)
-//     }
-
-//     return (
-//         <div className='matchInputWrapper'>
-//             <form onSubmit={handleSubmitForm}>
-//                 <div className='textInputContainer'>
-//                     <input type="text" name="Player1" />
-//                     <input type="text" name="Player2" />
-//                     <input type="text" name="Score" />
-//                     <input type="text" value={GetTodaysDate()} name="Date" />
-//                 </div>
-//                 <div className='buttonInputContainer'>
-//                     <input type="submit" value="Submit" />
-//                     <input type="cancel" onClick={handleCancelClick} value="Cancel" />
-//                 </div>
-//             </form>
-//         </div>
-//     );
-
-//     function GetTodaysDate() {
-//         const currentDate = new Date();
-//         const year = currentDate.getFullYear();
-//         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-//         const day = String(currentDate.getDate()).padStart(2, '0');
-
-//         return `${year}-${month}-${day}`;
-//     }
-// };
