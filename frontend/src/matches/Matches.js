@@ -42,7 +42,7 @@ export default function Matches({ data, setData }) {
         if (form.Date == "") form.Date = getTodaysDate()
 
         const match = {
-            "Id":1,
+            "Id": 1,
             "Player1":
             {
                 "Name": form.Player1,
@@ -77,40 +77,46 @@ export default function Matches({ data, setData }) {
         <div className="Matches">
             <h2>Matches</h2>
             <div className='TableWrapper'>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Player 1</th>
-                            <th>Player 2</th>
-                            <th>Result</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((item) => (
-                            <tr key={item.Id}>
-                                <td>{item.Player1.Name}</td>
-                                <td>{item.Player2.Name}</td>
-                                <td>{item.Player1.Score}:{item.Player2.Score}</td>
-                                <td>{item.Date}</td>
-                            </tr>
-                        ))}
-                        {showForm &&  <tr key="100">
-                            <td><input type='Text' name="Player1" onChange={handleFormChangeEvent} autoFocus /></td>
-                            <td><input type='Text' name="Player2" onChange={handleFormChangeEvent} /></td>
-                            <td>
-                                <div className='scoreInput'>
-                                    <input type='Text' name="ScorePlayer1" onChange={handleFormChangeEvent} maxLength={1}/>:
-                                    <input type='Text' name="ScorePlayer2" onChange={handleFormChangeEvent} maxLength={1}/>
-                                </div>
-                            </td>
-                            <td><input type='Text' name="Date" value={getTodaysDate()} onChange={handleFormChangeEvent} /></td>
-                        </tr>}
-                    </tbody>
-                </table>
-                {showAddButton && <button onClick={handleAddClick}>Add</button>}
-                {showConfirmButton && <button onClick={handleConfirmClick}>Confirm</button>}
-                {showCancelButton && <button onClick={handleCancelClick}>Cancel</button>}
+                {data.length === 0 ? (
+                    <div className="LoadingSpinner"></div>
+                ) : (
+                    <>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Player 1</th>
+                                    <th>Player 2</th>
+                                    <th>Result</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((item) => (
+                                    <tr key={item.Id}>
+                                        <td>{item.Player1.Name}</td>
+                                        <td>{item.Player2.Name}</td>
+                                        <td>{item.Player1.Score}:{item.Player2.Score}</td>
+                                        <td>{item.Date}</td>
+                                    </tr>
+                                ))}
+                                {showForm && <tr key="100">
+                                    <td><input type='Text' name="Player1" onChange={handleFormChangeEvent} autoFocus /></td>
+                                    <td><input type='Text' name="Player2" onChange={handleFormChangeEvent} /></td>
+                                    <td>
+                                        <div className='scoreInput'>
+                                            <input type='Text' name="ScorePlayer1" onChange={handleFormChangeEvent} maxLength={1} />:
+                                            <input type='Text' name="ScorePlayer2" onChange={handleFormChangeEvent} maxLength={1} />
+                                        </div>
+                                    </td>
+                                    <td><input type='Text' name="Date" value={getTodaysDate()} onChange={handleFormChangeEvent} /></td>
+                                </tr>}
+                            </tbody>
+                        </table>
+                        {showAddButton && <button onClick={handleAddClick}>Add</button>}
+                        {showConfirmButton && <button onClick={handleConfirmClick}>Confirm</button>}
+                        {showCancelButton && <button onClick={handleCancelClick}>Cancel</button>}
+                    </>
+                )}
             </div>
         </div>
     )

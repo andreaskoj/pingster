@@ -1,4 +1,6 @@
 import './Stats.css'
+import React from 'react';
+import './Stats.css';
 
 function groupAndOrderByWinsAndLosses(data) {
     const playerStats = {};
@@ -38,32 +40,34 @@ function groupAndOrderByWinsAndLosses(data) {
   }
 
 export default function Stats({ data }) {
+  data = groupAndOrderByWinsAndLosses(data);
 
-   data = groupAndOrderByWinsAndLosses(data)
-
-    return (
-        <div className="Stats">
-            <h2>Stats</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Wins</th>
-                        <th>Loses</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {data.map((item, index) => (
-                    <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{item.Name}</td>
-                        <td>{item.Wins}</td>
-                        <td>{item.Losses}</td>
-                    </tr>
-                ))}
-                 </tbody>
-            </table>
-        </div>
-    )
+  return (
+    <div className="Stats">
+      <h2>Stats</h2>
+    
+      {data.length === 0 ? (<div className="LoadingSpinner"></div>) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Wins</th>
+              <th>Loses</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.Name}</td>
+                <td>{item.Wins}</td>
+                <td>{item.Losses}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 }
