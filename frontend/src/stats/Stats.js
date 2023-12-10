@@ -43,7 +43,7 @@ export default function Stats({ data }) {
   data = groupAndOrderByWinsAndLosses(data);
 
   return (
-    <div className="Stats">
+    <div className="stats">
       <h2>Stats</h2>
     
       {data.length === 0 ? (<div className="LoadingSpinner"></div>) : (

@@ -1,6 +1,5 @@
 import React from 'react';
 import './Matches.css'
-import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 export default function Matches({ data, setData }) {
     let form = {
@@ -74,7 +73,7 @@ export default function Matches({ data, setData }) {
     }
 
     return (
-        <div className="Matches">
+        <div className="matches">
             <h2>Matches</h2>
             <div className='TableWrapper'>
                 {data.length === 0 ? (

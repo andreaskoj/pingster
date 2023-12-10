@@ -1,3 +1,7 @@
+.matches{
+    grid-column: span 1;
+}
+
 .scoreInput input[type=text] {
     width:10%;
 }

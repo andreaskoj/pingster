@@ -1,9 +1,32 @@
 const express = require('express');
 var cors = require('cors')
 
+const { MongoClient } = require("mongodb");
+
 const app = express();
 app.use(cors())
 const port = 3001;
+
+const uri = 'mongodb://localhost:27017/Pingster';
+const client = new MongoClient(uri);
+
+console.log(client);
+
+// async function run() {
+//   try {
+//     const database = client.db('sample_mflix');
+//     const movies = database.collection('movies');
+//     // Query for a movie that has the title 'Back to the Future'
+//     const query = { title: 'Back to the Future' };
+//     const movie = await movies.findOne(query);
+//     console.log(movie);
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+
 
 let data =
   [
@@ -51,12 +74,14 @@ let data =
     }
   ]
 
-// Define a sample route
+app.get('/', (req, res) => {
+  res.send("<div style='text-align: center; font-size: 36px;'>Pingster Backend!</div>");
+});
+  
 app.get('/data', (req, res) => {
   res.send(data);
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

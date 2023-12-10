@@ -1,7 +1,10 @@
 .App {
   font-size: 30px;
-  display: flex;
-  justify-content: space-evenly;
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
 h2 {
