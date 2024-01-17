@@ -3,6 +3,7 @@ import React from 'react';
 import './Stats.css';
 
 function groupAndOrderByWinsAndLosses(data) {
+  console.log(data);
     const playerStats = {};
 
     data.forEach((game) => {

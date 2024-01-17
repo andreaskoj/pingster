@@ -30,7 +30,7 @@ export default function Matches({ data, setData }) {
         setShowForm(false)
     }
 
-    const handleConfirmClick = () => {
+    const handleConfirmClick =  () => {
         setShowAddButton(true)
         setShowCancelButton(false)
         setConfirmButton(false)
@@ -38,25 +38,67 @@ export default function Matches({ data, setData }) {
 
         console.log(form)
 
-        if (form.Date == "") form.Date = getTodaysDate()
+        if (form.Date === "") form.Date = getTodaysDate()
 
         const match = {
             "Id": 1,
-            "Player1":
-            {
+            "Player1": {
                 "Name": form.Player1,
                 "Score": form.ScorePlayer1,
             },
-            "Player2":
-            {
+            "Player2": {
                 "Name": form.Player2,
                 "Score": form.ScorePlayer2,
             },
             "Date": form.Date
         };
 
-        setData([...data, match])
+        postJSON(match);
+
+        // console.log("match", match)
+        // // Send the match data to the server
+        // fetch('http://localhost:3001/data', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body: JSON.stringify(match)
+        // })
+        // .then(response =>  {
+        //     console.log('Response status:', response.status);
+        //     return response.json();
+        // })
+        // .then(data => {
+        //     // Update the state with the new match data
+        //     setData([...data, data]);
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
+        // console.log("after", match)
     }
+
+
+
+    async function postJSON(data) {
+        try {
+          const response = await fetch("http://localhost:3001/data", {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+            body: JSON.stringify(data),
+          });
+      
+          const result = await response.json();
+          console.log("Success:", result);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
 
     const handleFormChangeEvent = (event) => {
         const { name, value } = event.target

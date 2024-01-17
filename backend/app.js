@@ -7,10 +7,10 @@ const app = express();
 app.use(cors())
 const port = 3001;
 
-const uri = 'mongodb://localhost:27017/Pingster';
+const uri = 'mongodb://localhost:32768';
 const client = new MongoClient(uri);
 
-console.log(client);
+//console.log(client);
 
 // async function run() {
 //   try {
@@ -80,6 +80,35 @@ app.get('/', (req, res) => {
   
 app.get('/data', (req, res) => {
   res.send(data);
+});
+
+app.post('/data', (req, res) => {
+  const newMatch = req.body; // Assuming the request body contains the new match data
+  console.log("request",req);
+  // Connect to the MongoDB database
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Failed to connect to the database");
+      return;
+    }
+
+    const database = client.db('Pingster');
+    const matches = database.collection('Matches');
+
+    // Insert the new match document
+    matches.insertOne(newMatch, (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Failed to add the match to the database");
+        return;
+      }
+
+      res.status(200).send("Match added successfully");
+    });
+
+    client.close();
+  });
 });
 
 app.listen(port, () => {
