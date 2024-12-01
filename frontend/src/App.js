@@ -10,12 +10,10 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    //extract to a service
+    const fetchMatches = async () => {
       try {
-        // delay for testing
-        //await new Promise(resolve => setTimeout(resolve, 3000));
-
-        const response = await fetch('http://localhost:3001/data');
+        const response = await fetch('http://localhost:3001/matches');
        
         if (!response.ok) {
           throw new Error('Network response was not ok.');
@@ -30,7 +28,7 @@ function App() {
       }
     };
 
-    fetchData();
+    fetchMatches();
   }, []);
 
   if (isLoading) {

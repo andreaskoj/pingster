@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cors())
 const port = 3001;
 
+//should take from env
 const uri = 'mongodb://localhost:27017';
 let db;
 
@@ -41,78 +42,40 @@ const initializeDatabase = async () => {
 
 initializeDatabase();
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send("<div style='display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 36px; font-weight: bold;'>Pingster Backend</div>");
 });
 
 //needs authentication
-app.get('/data', async (req, res) => {
+app.get('/matches', async (_, res) => {
   try {
     const collection = db.collection('Matches');
     const data = await collection.find({}).toArray();
-    res.send(data);
+    const mappedData = data.map(item => ({
+      ...item,
+      Id: item._id
+    }));
+    res.send(mappedData);
   } catch (err) {
     console.error('Error fetching data:', err);
     res.status(500).send('Error fetching data');
   }
 });
 
-app.post('/data', (req, res) => {
+//needs authentication
+app.post('/matches', (req, _) => {
   const newMatch = req.body;
-  console.log("request", newMatch);
-
-  const mongoURL = 'mongodb://localhost:32768/Pingster';
-
-  MongoClient.connect(mongoURL, (err, client) => {
-    if (err) {
-      console.error('Error connecting to MongoDB:', err);
-      return;
-    }
-    console.log('Connected to MongoDB');
-
-    const db = client.db();
-
     const collection = db.collection('Matches');
-    collection.insertOne({ key: 'value' }, (err, result) => {
+    collection.insertOne(newMatch, (err, result) => {
       if (err) {
-        console.error('Error inserting document:', err);
-        return;
+      console.error('Error inserting document:', err);
+      res.status(500).send('Error inserting document');
+      return;
       }
       console.log('Document inserted:', result.ops);
+      res.send({ id: result.insertedId });
     });
-
-    // Close the connection when done
-    client.close();
   });
-  // MongoClient.connect(uri, (err, client) => {
-  //   if (err) {
-  //     console.error(err);
-  //     res.status(500).send("Failed to connect to the database");
-  //     return;
-  //   }
-
-  //   console.log("connected?");
-
-  //   const database = client.db('Pingster');
-  //   const matches = database.collection('Matches');
-
-  //   console.log("about to insert");
-
-  //   matches.insertOne(newMatch, (err, result) => {
-  //     if (err) {
-  //       console.error(err);
-  //       res.status(500).send("Failed to add the match to the database");
-  //       return;
-  //     }
-
-  //     res.status(200).send("Match added successfully");
-  //   });
-
-  //   console.log("after insert");
-
-  //   client.close();
-  // });
-});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

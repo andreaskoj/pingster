@@ -2,6 +2,7 @@ import React from 'react';
 import './Matches.css'
 
 export default function Matches({ data, setData }) {
+    //needs validation/sanitization
     let form = {
         Player1: "",
         Player2: "",
@@ -10,7 +11,6 @@ export default function Matches({ data, setData }) {
         Date: ""
     }
 
-    //const [formData, setFormData] = React.useState();
     const [showForm, setShowForm] = React.useState(false);
     const [showAddButton, setShowAddButton] = React.useState(true);
     const [showCancelButton, setShowCancelButton] = React.useState(false);
@@ -36,12 +36,10 @@ export default function Matches({ data, setData }) {
         setConfirmButton(false)
         setShowForm(false)
 
-        console.log(form)
 
         if (form.Date === "") form.Date = getTodaysDate()
 
         const match = {
-            "Id": 1,
             "Player1": {
                 "Name": form.Player1,
                 "Score": form.ScorePlayer1,
@@ -53,48 +51,26 @@ export default function Matches({ data, setData }) {
             "Date": form.Date
         };
 
-        postJSON(match);
+        var id = CreateMatch(match);
 
-        // console.log("match", match)
-        // // Send the match data to the server
-        // fetch('http://localhost:3001/data', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //       },
-        //     body: JSON.stringify(match)
-        // })
-        // .then(response =>  {
-        //     console.log('Response status:', response.status);
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     // Update the state with the new match data
-        //     setData([...data, data]);
-        // })
-        // .catch(error => {
-        //     console.error('Error:', error);
-        // });
-        // console.log("after", match)
+        setData([...data, { ...match, Id: id }]);
     }
 
-
-
-    async function postJSON(data) {
+    //extract to a service
+    async function CreateMatch(data) {
         try {
-          const response = await fetch("http://127.0.0.1:3001/data", {
-            method: "POST", // or 'PUT'
+          const response = await fetch("http://localhost:3001/matches", {
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             mode: "cors",
             body: JSON.stringify(data),
           });
-      
+
           const result = await response.json();
           console.log("Success:", result);
+
         } catch (error) {
           console.error("Error:", error);
         }
