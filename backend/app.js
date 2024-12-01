@@ -2,113 +2,116 @@ const express = require('express');
 var cors = require('cors')
 
 const { MongoClient } = require("mongodb");
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
+app.use(express.json());
 app.use(cors())
 const port = 3001;
 
-const uri = 'mongodb://localhost:32768';
-const client = new MongoClient(uri);
+const uri = 'mongodb://localhost:27017';
+let db;
 
-//console.log(client);
+const initializeDatabase = async () => {
+  const client = new MongoClient(uri);
 
-// async function run() {
-//   try {
-//     const database = client.db('sample_mflix');
-//     const movies = database.collection('movies');
-//     // Query for a movie that has the title 'Back to the Future'
-//     const query = { title: 'Back to the Future' };
-//     const movie = await movies.findOne(query);
-//     console.log(movie);
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB');
 
+    db = client.db('Pingster');
+    const collection = db.collection('Matches');
 
-let data =
-  [
-    {
-      "Id": 1,
-      "Player1": 
-              { 
-                "Name": "Magda",
-                "Score": 2, 
-              },
-      "Player2": 
-        	    { 
-                "Name": "Andreas",
-                "Score": 3, 
-               },
-      "Date" :"2023-11-04"
-    },
-    {
-      "Id": 2,
-      "Player1": 
-              { 
-                "Name": "Magda",
-                "Score": 3, 
-              },
-      "Player2": 
-        	    { 
-                "Name": "Andreas",
-                "Score": 2, 
-               },
-      "Date" :"2023-11-04"
-    },
-    {
-      "Id": 3,
-      "Player1": 
-              { 
-                "Name": "Magda",
-                "Score": 3, 
-              },
-      "Player2": 
-        	    { 
-                "Name": "Andreas",
-                "Score": 2, 
-               },
-      "Date" :"2023-11-04"
+    const count = await collection.countDocuments();
+    if (count === 0) {
+      const dataPath = path.join(__dirname, 'test-data.json');
+      const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+
+      await collection.insertMany(data);
+      console.log('Inserted initial documents.');
+    } else {
+      console.log('Collection already has documents.');
     }
-  ]
+  } catch (err) {
+    console.error('Error initializing database:', err);
+    client.close();
+  }
+};
+
+initializeDatabase();
 
 app.get('/', (req, res) => {
-  res.send("<div style='text-align: center; font-size: 36px;'>Pingster Backend!</div>");
+  res.send("<div style='display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 36px; font-weight: bold;'>Pingster Backend</div>");
 });
-  
-app.get('/data', (req, res) => {
-  res.send(data);
+
+//needs authentication
+app.get('/data', async (req, res) => {
+  try {
+    const collection = db.collection('Matches');
+    const data = await collection.find({}).toArray();
+    res.send(data);
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    res.status(500).send('Error fetching data');
+  }
 });
 
 app.post('/data', (req, res) => {
-  const newMatch = req.body; // Assuming the request body contains the new match data
-  console.log("request",req);
-  // Connect to the MongoDB database
-  MongoClient.connect(uri, (err, client) => {
+  const newMatch = req.body;
+  console.log("request", newMatch);
+
+  const mongoURL = 'mongodb://localhost:32768/Pingster';
+
+  MongoClient.connect(mongoURL, (err, client) => {
     if (err) {
-      console.error(err);
-      res.status(500).send("Failed to connect to the database");
+      console.error('Error connecting to MongoDB:', err);
       return;
     }
+    console.log('Connected to MongoDB');
 
-    const database = client.db('Pingster');
-    const matches = database.collection('Matches');
+    const db = client.db();
 
-    // Insert the new match document
-    matches.insertOne(newMatch, (err, result) => {
+    const collection = db.collection('Matches');
+    collection.insertOne({ key: 'value' }, (err, result) => {
       if (err) {
-        console.error(err);
-        res.status(500).send("Failed to add the match to the database");
+        console.error('Error inserting document:', err);
         return;
       }
-
-      res.status(200).send("Match added successfully");
+      console.log('Document inserted:', result.ops);
     });
 
+    // Close the connection when done
     client.close();
   });
+  // MongoClient.connect(uri, (err, client) => {
+  //   if (err) {
+  //     console.error(err);
+  //     res.status(500).send("Failed to connect to the database");
+  //     return;
+  //   }
+
+  //   console.log("connected?");
+
+  //   const database = client.db('Pingster');
+  //   const matches = database.collection('Matches');
+
+  //   console.log("about to insert");
+
+  //   matches.insertOne(newMatch, (err, result) => {
+  //     if (err) {
+  //       console.error(err);
+  //       res.status(500).send("Failed to add the match to the database");
+  //       return;
+  //     }
+
+  //     res.status(200).send("Match added successfully");
+  //   });
+
+  //   console.log("after insert");
+
+  //   client.close();
+  // });
 });
 
 app.listen(port, () => {

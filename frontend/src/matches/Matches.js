@@ -84,7 +84,7 @@ export default function Matches({ data, setData }) {
 
     async function postJSON(data) {
         try {
-          const response = await fetch("http://localhost:3001/data", {
+          const response = await fetch("http://127.0.0.1:3001/data", {
             method: "POST", // or 'PUT'
             headers: {
               "Content-Type": "application/json",
@@ -153,9 +153,11 @@ export default function Matches({ data, setData }) {
                                 </tr>}
                             </tbody>
                         </table>
-                        {showAddButton && <button onClick={handleAddClick}>Add</button>}
-                        {showConfirmButton && <button onClick={handleConfirmClick}>Confirm</button>}
-                        {showCancelButton && <button onClick={handleCancelClick}>Cancel</button>}
+                        <form>
+                            {showAddButton && <button onClick={handleAddClick}>Add</button>}
+                            {showConfirmButton && <button onClick={handleConfirmClick}>Confirm</button>}
+                            {showCancelButton && <button onClick={handleCancelClick}>Cancel</button>}
+                        </form>
                     </>
                 )}
             </div>

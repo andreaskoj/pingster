@@ -1,0 +1,38 @@
+[
+    {
+      "Id": 1,
+      "Player1": {
+        "Name": "Magda",
+        "Score": 2
+      },
+      "Player2": {
+        "Name": "Andreas",
+        "Score": 3
+      },
+      "Date": "2023-11-04"
+    },
+    {
+      "Id": 2,
+      "Player1": {
+        "Name": "Magda",
+        "Score": 3
+      },
+      "Player2": {
+        "Name": "Andreas",
+        "Score": 2
+      },
+      "Date": "2023-11-04"
+    },
+    {
+      "Id": 3,
+      "Player1": {
+        "Name": "Magda",
+        "Score": 3
+      },
+      "Player2": {
+        "Name": "Andreas",
+        "Score": 2
+      },
+      "Date": "2023-11-04"
+    }
+  ]
