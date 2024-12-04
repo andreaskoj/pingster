@@ -1,7 +1,7 @@
 import React from 'react';
 import './Matches.css'
 
-export default function Matches({ data, setData }) {
+export default function Matches({ data, setData, isLoading }) {
     //needs validation/sanitization
     let form = {
         Player1: "",
@@ -94,7 +94,7 @@ export default function Matches({ data, setData }) {
         <div className="matches">
             <h2>Matches</h2>
             <div className='TableWrapper'>
-                {data.length === 0 ? (
+                {isLoading? (
                     <div className="LoadingSpinner"></div>
                 ) : (
                     <>

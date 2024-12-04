@@ -3,7 +3,6 @@ import React from 'react';
 import './Stats.css';
 
 function groupAndOrderByWinsAndLosses(data) {
-  console.log(data);
     const playerStats = {};
 
     data.forEach((game) => {
@@ -40,14 +39,16 @@ function groupAndOrderByWinsAndLosses(data) {
     return playerStatsArray;
   }
 
-export default function Stats({ data }) {
-  data = groupAndOrderByWinsAndLosses(data);
-
+export default function Stats({ data , isLoading }) {
+  if (!isLoading) {
+    data = groupAndOrderByWinsAndLosses(data);
+  }
+ 
   return (
     <div className="stats">
       <h2>Stats</h2>
     
-      {data.length === 0 ? (<div className="LoadingSpinner"></div>) : (
+      {isLoading ? (<div className="LoadingSpinner"></div>) : (
         <table>
           <thead>
             <tr>

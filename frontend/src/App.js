@@ -31,10 +31,6 @@ function App() {
     fetchMatches();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -42,8 +38,8 @@ function App() {
   return (
     <div className="App"> 
       <Header/>
-      <Stats data={data} />
-      <Matches data={data} setData={setData} />
+      <Stats data={data} isLoading={isLoading}/>
+      <Matches data={data} setData={setData} isLoading={isLoading} />
     </div>
   );
 }
